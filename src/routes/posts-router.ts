@@ -22,7 +22,7 @@ postsRouter.get('/', (req: Request, res: Response) => {
 postsRouter.post('/', checkAuth,postsValidate, (req: Request, res: Response) => {
     const existBlogger = bloggers.find(b => b.id === req.body.bloggerId)
     if(!existBlogger){
-        res.status(400)
+        res.status(400).send(errorFindBlogger)
         return;
     }
     const createdPost = postsRepository.createPost(req.body,existBlogger)
