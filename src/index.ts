@@ -6,7 +6,7 @@ import {bloggersRouter} from "./routes/bloggers-router";
 import {postsRouter} from "./routes/posts-router";
 import {checkAuth} from "./middlewares/auth";
 
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 5001
 
 
 app.use(cors())
