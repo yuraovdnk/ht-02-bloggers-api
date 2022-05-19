@@ -1,7 +1,7 @@
 import {Router, Response, Request} from "express";
 import {postsRepository} from "../repositories/posts-repository";
 import {postsValidate} from "../middlewares/posts-validator";
-import {bloggersRepository} from "../repositories/bloggers-repository";
+import {bloggers, bloggersRepository} from "../repositories/bloggers-repository";
 import {checkAuth} from "../middlewares/auth";
 
 export const postsRouter = Router()
@@ -20,7 +20,13 @@ postsRouter.get('/', (req: Request, res: Response) => {
     res.send(posts)
 })
 postsRouter.post('/', checkAuth,postsValidate, (req: Request, res: Response) => {
-    const createdPost = postsRepository.createPost(req.body)
+    const existBlogger = bloggers.find(b => b.id === req.body.bloggerId)
+    if(!existBlogger){
+        res.status(400)
+        return;
+    }
+    const createdPost = postsRepository.createPost(req.body,existBlogger)
+
     if (createdPost) {
         res.status(201).send(createdPost)
         return

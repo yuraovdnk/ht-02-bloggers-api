@@ -34,21 +34,17 @@ export const postsRepository = {
         return posts.length < countArray
     },
 
-    createPost(body: any) {
-        const existBlogger = bloggers.find(b => b.id === body.bloggerId)
-        if (existBlogger) {
+    createPost(body: any,blogger: any) {
             const newPost = {
                 id: Date.now(),
                 title: body.title,
                 shortDescription: body.shortDescription,
                 content: body.content,
                 bloggerId: body.bloggerId,
-                bloggerName: existBlogger.name
+                bloggerName: blogger.name
             }
             posts.push(newPost)
             return newPost
-        }
-        return existBlogger
     },
 
     updatePost(body: any, id: number) {
