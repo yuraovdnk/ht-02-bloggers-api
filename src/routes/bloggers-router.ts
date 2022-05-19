@@ -1,8 +1,7 @@
 import {Router, Request, Response} from "express";
-import {bloggers, bloggersRepository} from "../repositories/bloggers-repository";
+import {bloggersRepository} from "../repositories/bloggers-repository";
 import {bloggersValidate} from "../middlewares/bloggers-validator";
 import {checkAuth} from "../middlewares/auth";
-import {log} from "util";
 
 export const bloggersRouter = Router()
 

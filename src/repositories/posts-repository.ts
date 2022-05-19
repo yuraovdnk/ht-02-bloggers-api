@@ -1,4 +1,3 @@
-import {bloggers} from "./bloggers-repository";
 
 let posts = [
     {
