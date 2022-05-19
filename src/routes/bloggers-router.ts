@@ -1,6 +1,7 @@
 import {Router, Request, Response} from "express";
 import {bloggersRepository} from "../repositories/bloggers-repository";
 import {bloggersValidate} from "../middlewares/bloggers-validator";
+import {checkAuth} from "../middlewares/auth";
 
 export const bloggersRouter = Router()
 
@@ -19,7 +20,7 @@ bloggersRouter.get('/:id', (req: Request, res: Response) => {
     res.status(404).send()
 })
 
-bloggersRouter.post('/', bloggersValidate,(req: Request, res: Response) => {
+bloggersRouter.post('/', checkAuth,bloggersValidate,(req: Request, res: Response) => {
     const newBlogger = bloggersRepository.createBlogger(req.body)
 
     if (newBlogger) {
@@ -29,7 +30,7 @@ bloggersRouter.post('/', bloggersValidate,(req: Request, res: Response) => {
     res.send(404)
 })
 
-bloggersRouter.put('/:id', bloggersValidate,(req: Request, res: Response) => {
+bloggersRouter.put('/:id',checkAuth,bloggersValidate,(req: Request, res: Response) => {
     const id = +req.params.id
     const updatedBlogger = bloggersRepository.updateBlogger(req.body, id)
 
@@ -41,7 +42,7 @@ bloggersRouter.put('/:id', bloggersValidate,(req: Request, res: Response) => {
     return res.send(404)
 })
 
-bloggersRouter.delete('/:id', (req: Request, res: Response) => {
+bloggersRouter.delete('/:id',checkAuth, (req: Request, res: Response) => {
     const id = +req.params.id
     const deletedBlogger = bloggersRepository.deleteBlogger(id)
 

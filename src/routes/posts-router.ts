@@ -2,6 +2,7 @@ import {Router, Response, Request} from "express";
 import {postsRepository} from "../repositories/posts-repository";
 import {postsValidate} from "../middlewares/posts-validator";
 import {bloggersRepository} from "../repositories/bloggers-repository";
+import {checkAuth} from "../middlewares/auth";
 
 export const postsRouter = Router()
 
@@ -18,7 +19,7 @@ postsRouter.get('/', (req: Request, res: Response) => {
     const posts = postsRepository.getPosts()
     res.send(posts)
 })
-postsRouter.post('/', postsValidate, (req: Request, res: Response) => {
+postsRouter.post('/', checkAuth,postsValidate, (req: Request, res: Response) => {
     const createdPost = postsRepository.createPost(req.body)
     if (createdPost) {
         res.status(201).send(createdPost)
@@ -26,7 +27,7 @@ postsRouter.post('/', postsValidate, (req: Request, res: Response) => {
     }
     res.status(404)
 })
-postsRouter.put('/:id', postsValidate, (req: Request, res: Response) => {
+postsRouter.put('/:id',checkAuth, postsValidate, (req: Request, res: Response) => {
     const postId = +req.params.id
 
     if (!postsRepository.getPostById(postId)) {
@@ -34,7 +35,6 @@ postsRouter.put('/:id', postsValidate, (req: Request, res: Response) => {
         return
     }
     if (!bloggersRepository.getBloggerById(req.body.bloggerId)) {
-        console.log("nema")
         res.status(400).send(errorFindBlogger)
         return;
     }
@@ -53,7 +53,7 @@ postsRouter.get('/:id', (req: Request, res: Response) => {
     }
     res.status(404)
 })
-postsRouter.delete('/:id', (req: Request, res: Response) => {
+postsRouter.delete('/:id', checkAuth,(req: Request, res: Response) => {
     const id = +req.params.id
     const deletedPost = postsRepository.deletePosts(id)
     if (deletedPost) {
