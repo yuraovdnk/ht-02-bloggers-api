@@ -49,7 +49,7 @@ bloggersRouter.put('/:id', checkAuth, bloggersValidate, (req: Request, res: Resp
 
 bloggersRouter.delete('/:id', checkAuth, (req: Request, res: Response) => {
     const id = +req.params.id
-    if (id && typeof id === 'number') {
+    if (id) {
         const deletedBlogger = bloggersRepository.deleteBlogger(id)
         if (deletedBlogger) {
             res.send(204)

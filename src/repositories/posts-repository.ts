@@ -29,7 +29,9 @@ export const postsRepository = {
     },
 
     deletePosts(id: number) {
-        return posts = posts.filter(p => p.id !== id)
+        const countArray = posts.length
+        posts = posts.filter(p => p.id !== id)
+        return posts.length < countArray
     },
 
     createPost(body: any) {
