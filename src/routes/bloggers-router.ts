@@ -15,6 +15,7 @@ bloggersRouter.get('/:id', (req: Request, res: Response) => {
         let foundBlogger = bloggersRepository.getBloggerById(id)
         if (foundBlogger) {
             res.status(200).send(foundBlogger)
+            return
         }
     }
     res.status(404).send()
@@ -25,6 +26,7 @@ bloggersRouter.post('/', checkAuth,bloggersValidate,(req: Request, res: Response
 
     if (newBlogger) {
         res.status(200).send(newBlogger)
+        return
     }
 
     res.send(404)
@@ -49,15 +51,13 @@ bloggersRouter.delete('/:id',checkAuth, (req: Request, res: Response) => {
     const id = +req.params.id
     if(id && typeof id === 'number'){
         const deletedBlogger = bloggersRepository.deleteBlogger(id)
-
         if (deletedBlogger) {
             res.send(204)
             return
         }
         res.send(404)
-        return;
+        return
     }
     res.send(400)
-
 
 })

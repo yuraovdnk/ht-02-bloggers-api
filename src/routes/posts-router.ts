@@ -41,6 +41,7 @@ postsRouter.put('/:id',checkAuth, postsValidate, (req: Request, res: Response) =
     const isUpdetedPost = postsRepository.updatePost(req.body, postId)
     if (isUpdetedPost) {
         res.send(204)
+        return;
     }
 
 })
