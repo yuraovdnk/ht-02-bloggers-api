@@ -1,5 +1,5 @@
 import {Router, Request, Response} from "express";
-import {bloggersRepository} from "../repositories/bloggers-repository";
+import {bloggers, bloggersRepository} from "../repositories/bloggers-repository";
 import {bloggersValidate} from "../middlewares/bloggers-validator";
 import {checkAuth} from "../middlewares/auth";
 
@@ -22,6 +22,7 @@ bloggersRouter.get('/:id', (req: Request, res: Response) => {
 })
 
 bloggersRouter.post('/', checkAuth,bloggersValidate,(req: Request, res: Response) => {
+
     const newBlogger = bloggersRepository.createBlogger(req.body)
 
     if (newBlogger) {
