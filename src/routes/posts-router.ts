@@ -25,7 +25,7 @@ postsRouter.post('/', checkAuth,postsValidate, (req: Request, res: Response) => 
         res.status(201).send(createdPost)
         return
     }
-    res.status(404)
+    res.send(404)
 })
 postsRouter.put('/:id',checkAuth, postsValidate, (req: Request, res: Response) => {
     const postId = +req.params.id
@@ -51,7 +51,7 @@ postsRouter.get('/:id', (req: Request, res: Response) => {
         res.status(200).send(foundPost)
         return
     }
-    res.status(404)
+    res.send(404)
 })
 postsRouter.delete('/:id', checkAuth,(req: Request, res: Response) => {
     const id = +req.params.id
