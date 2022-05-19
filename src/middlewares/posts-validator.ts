@@ -24,14 +24,13 @@ const contentValidation = body('content')
     .isLength({max:30}).withMessage(`The field Content must be a string or array type with a maximum length of \'100\'.`)
 
 
-export const bloggerIdValidation = body('bloggerId')
-    .exists().withMessage('The field bloggerId is required')
-    .isNumeric().withMessage('The field bloggerId should be integer')
+// export const bloggerIdValidation = body('bloggerId')
+//     .exists().withMessage('The field bloggerId is required')
+//     .isNumeric().withMessage('The field bloggerId should be integer')
 
 export const postsValidate = [
     titleValidation,
     shortDescriptionValidation,
     contentValidation,
-    bloggerIdValidation,
     errorsValidation
 ]

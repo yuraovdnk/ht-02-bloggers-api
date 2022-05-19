@@ -11,12 +11,12 @@ bloggersRouter.get('/', (req: Request, res: Response) => {
 
 bloggersRouter.get('/:id', (req: Request, res: Response) => {
     const id = +req.params.id
-    let foundBlogger = bloggersRepository.getBloggerById(id)
-
-    if (foundBlogger) {
-        res.status(200).send(foundBlogger)
+    if(id){
+        let foundBlogger = bloggersRepository.getBloggerById(id)
+        if (foundBlogger) {
+            res.status(200).send(foundBlogger)
+        }
     }
-
     res.status(404).send()
 })
 
@@ -32,11 +32,12 @@ bloggersRouter.post('/', checkAuth,bloggersValidate,(req: Request, res: Response
 
 bloggersRouter.put('/:id',checkAuth,bloggersValidate,(req: Request, res: Response) => {
     const id = +req.params.id
-    const updatedBlogger = bloggersRepository.updateBlogger(req.body, id)
-
-    if (updatedBlogger) {
-        res.send(204)
-        return
+    if(id){
+        const updatedBlogger = bloggersRepository.updateBlogger(req.body, id)
+        if (updatedBlogger) {
+            res.send(204)
+            return
+        }
     }
 
     return res.send(404)
