@@ -38,10 +38,11 @@ bloggersRouter.put('/:id',checkAuth,bloggersValidate,(req: Request, res: Respons
             res.send(204)
             return
         }
-        return res.send(404)
+        res.send(404)
+        return
     }
 
-    return res.send(400)
+    res.send(400)
 })
 
 bloggersRouter.delete('/:id',checkAuth, (req: Request, res: Response) => {
