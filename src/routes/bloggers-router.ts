@@ -31,26 +31,32 @@ bloggersRouter.post('/', checkAuth,bloggersValidate,(req: Request, res: Response
 })
 
 bloggersRouter.put('/:id',checkAuth,bloggersValidate,(req: Request, res: Response) => {
-    const id = +req.params.id
-    if(id){
+    const id = req.params.id
+    if(id && typeof id === 'number'){
         const updatedBlogger = bloggersRepository.updateBlogger(req.body, id)
         if (updatedBlogger) {
             res.send(204)
             return
         }
+        return res.send(404)
     }
 
-    return res.send(404)
+    return res.send(400)
 })
 
 bloggersRouter.delete('/:id',checkAuth, (req: Request, res: Response) => {
     const id = +req.params.id
-    const deletedBlogger = bloggersRepository.deleteBlogger(id)
+    if(id && typeof id === 'number'){
+        const deletedBlogger = bloggersRepository.deleteBlogger(id)
 
-    if (deletedBlogger) {
-        res.send(204)
-        return
+        if (deletedBlogger) {
+            res.send(204)
+            return
+        }
+        res.send(404)
+        return;
     }
+    res.send(400)
 
-    res.send(404)
+
 })

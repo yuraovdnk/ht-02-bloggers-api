@@ -34,6 +34,6 @@ export const bloggersRepository = {
         if(blogger){
             return bloggers = bloggers.filter(b => b.id !== id)
         }
-        return
+        return blogger
     }
 }
